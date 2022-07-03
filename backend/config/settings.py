@@ -13,11 +13,12 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
+API_KEY = env('API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.get_value('DEBUG', bool)
 
-ALLOWED_HOSTS = [env('SECRET_KEY')]
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -117,5 +118,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-API_KEY = env('API_KEY')
