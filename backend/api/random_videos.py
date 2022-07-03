@@ -11,7 +11,7 @@ MAX_RESULTS = 50
 
 youtube = build('youtube', 'v3', developerKey=settings.API_KEY)
 uploaded_videos = []
-random_videos = []
+random_videos = {'items': []}
 
 def get_id(url):
     match = re.search('https://www.youtube.com/(.+?)/', url)
@@ -71,7 +71,7 @@ def get_recent_videos(uploads_id):
     request = youtube.playlistItems().list(
         part='snippet',
         playlistId=uploads_id,
-        maxResults=MAX_RESULTS,
+        maxResults=MAX_RESULTS
     )
 
     response = request.execute()
@@ -121,9 +121,12 @@ def get_rest_videos(uploads_id, video_count, next_page_token):
 def get_random_videos(video_count):
     for i in range(10):
         random_num = random.randrange(0, video_count)
-        random_videos.append(uploaded_videos[random_num])
+        random_videos['items'].append(uploaded_videos[random_num])
 
 def main(url):
+    global uploaded_videos, random_videos
+    uploaded_videos = []
+    random_videos['items'] = []
     id = get_id(url=url)
     uploads_id = get_uploads_id(id=id)
     video_count = get_video_count(id=id)
